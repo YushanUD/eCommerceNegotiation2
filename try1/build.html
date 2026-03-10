@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Build - E-Commerce Negotiation Platform Tutorial</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: "#0d9488"
+          }
+        }
+      }
+    };
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet" />
+  <link href="styles.css" rel="stylesheet" />
+</head>
+<body data-page="build">
+  <header class="site-header">
+    <nav class="site-nav">
+      <a class="brand" href="index.html">Negotiation App Tutorial</a>
+      <div class="nav-links">
+        <a data-nav="index" href="index.html">Introduction</a>
+        <a data-nav="setup" href="setup.html">Setup</a>
+        <a data-nav="build" href="build.html">Build</a>
+        <a data-nav="deploy" href="deploy.html">Deploy</a>
+        <a data-nav="reference" href="reference.html">Reference</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="hero">
+      <p class="eyebrow">Page 3 of 5</p>
+      <h1>Build Your App with Cursor</h1>
+      <p>
+        This page is where your project becomes real. You will ask Cursor to generate a full Next.js + InstantDB app
+        from one strong prompt, then run it locally.
+      </p>
+    </section>
+
+    <section>
+      <h2>1) Create Your Project Folder</h2>
+      <ol>
+        <li>Create a folder like <code>negotiation-platform</code> (use dashes, no spaces).</li>
+        <li>Open Cursor.</li>
+        <li>Use File -&gt; Open Folder and select that folder.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>2) Open Composer and Paste the Build Prompt</h2>
+      <ol>
+        <li>Open Composer with <code>Cmd+I</code> (Mac) or <code>Ctrl+I</code> (Windows).</li>
+        <li>Copy the full prompt below.</li>
+        <li>Replace every <code>YOUR_APP_ID_HERE</code> with your real InstantDB App ID.</li>
+        <li>Send the prompt and let Cursor generate files.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Your Personalized Build Prompt</h2>
+      <pre><code class="language-markdown">Build me a Next.js web application. Here are the complete specifications:
+
+## Tech Stack (DO NOT DEVIATE)
+- Next.js 14+ with App Router (not Pages Router)
+- TypeScript
+- Tailwind CSS for styling
+- InstantDB for database and authentication (use @instantdb/react)
+
+## InstantDB Configuration
+My InstantDB App ID is: YOUR_APP_ID_HERE
+
+Initialize InstantDB in a file at `src/lib/db.ts` like this:
+```typescript
+import { init } from '@instantdb/react';
+import schema from '../../instant.schema';
+
+const APP_ID = 'YOUR_APP_ID_HERE';
+
+export const db = init({
+  appId: APP_ID,
+  schema
+});
+```
+
+## App Description
+Build an e-commerce negotiation platform where students negotiate product offers with a rules-based computer agent.
+The admin user configures products, negotiable features, and the agent's feature preference weights.
+Each student user configures their own personal feature and option preferences, then exchanges offers and can accept a final offer.
+
+## Roles and Access Rules
+- There are two user roles: `admin` and `student`.
+- The admin is me, identified by my login email (I will provide it in env/config as ADMIN_EMAIL).
+- Admin can create/edit products, features, options, and agent preference profiles.
+- Student users can configure only their own preference profile and negotiation sessions.
+- Enforce role-based restrictions in UI and InstantDB permissions.
+
+## Data Model
+Create an InstantDB schema in `instant.schema.ts` with these entities:
+- `profiles`: role (string: "admin" | "student"), fullName (string), ageRange (string), gender (string), createdAt (date)
+- `products`: name (string), description (string), isActive (boolean), createdAt (date)
+- `features`: name (string), weightPercent (number), createdAt (date)
+- `featureOptions`: label (string), utilityWeight (number), createdAt (date)
+- `agentPreferenceProfiles`: name (string), notes (string), createdAt (date)
+- `studentPreferenceProfiles`: name (string), createdAt (date)
+- `offers`: roundNumber (number), offeredPrice (number), notes (string), status (string: "pending" | "accepted" | "rejected"), createdAt (date)
+- `negotiationSessions`: status (string: "active" | "completed"), finalDecision (string: "accepted" | "walked_away" | "ongoing"), createdAt (date)
+
+And these relationships:
+- Each product has many features.
+- Each feature has many featureOptions.
+- Each agentPreferenceProfile belongs to one product and has feature-level weights.
+- Each studentPreferenceProfile belongs to one user and one product.
+- Each negotiationSession belongs to one student user and one product.
+- Each negotiationSession has many offers.
+- Each offer belongs to exactly one negotiationSession and one creator user.
+
+## Authentication
+Implement user authentication using InstantDB Magic Code flow:
+1. User enters email
+2. InstantDB sends a 6-digit code
+3. User enters code to log in
+4. Use `db.useAuth()` to check status
+5. Protect all app routes except login
+
+## Pages to Create
+- `/` - Home dashboard with role-based quick actions and active negotiations
+- `/login` - Email + magic code login page
+- `/admin/products` - Admin page to create and manage products
+- `/admin/products/[id]/features` - Admin page to manage negotiable features and options
+- `/admin/agent-preferences` - Admin page to define computer agent preference weights
+- `/profile` - Student demographic/profile setup page
+- `/preferences` - Student preference setup page (feature weights sum to 100%)
+- `/negotiation/new` - Start a negotiation session for a selected product
+- `/negotiation/[id]` - Negotiation room with offer history and counter-offers
+- `/my-negotiations` - Student list of current and past negotiation sessions
+
+## Core Features
+1. Admin can set products and negotiable feature structures.
+2. Admin can configure the computer agent preference profile and acceptance thresholds.
+3. Student can set personal preference weights (must total 100%) and option utilities.
+4. Student and agent exchange offers by round.
+5. Rules-based agent creates counter-offers from weighted scoring (no external APIs).
+6. Agent accepts when offer score reaches threshold; student can accept or continue.
+7. Every user sees only data they are allowed to view based on role and ownership.
+
+## Rules-Based Negotiation Engine Requirements
+- Implement deterministic logic in code, no external AI services.
+- Calculate weighted utility score for each offer using:
+  - feature weight
+  - selected option utility
+  - price sensitivity rule
+- Return one of: counter-offer, accept, or reject.
+- Show a transparent explanation panel in UI: why the agent responded that way.
+- Keep logic simple and well-commented so a beginner can follow.
+
+## UI Requirements
+- Clean, modern Tailwind design
+- Mobile responsive
+- Clear role-aware navigation
+- Loading states for async operations
+- Friendly empty states
+- Helpful validation errors (especially for weight totals)
+
+## File Structure
+Use this structure:
+```
+src/
+├── app/
+│   ├── layout.tsx
+│   ├── page.tsx
+│   ├── login/
+│   │   └── page.tsx
+│   ├── admin/
+│   │   ├── products/
+│   │   └── agent-preferences/
+│   ├── profile/
+│   │   └── page.tsx
+│   ├── preferences/
+│   │   └── page.tsx
+│   └── negotiation/
+│       └── [id]/
+├── components/
+│   ├── auth/
+│   ├── negotiation/
+│   ├── preferences/
+│   └── ui/
+└── lib/
+    ├── db.ts
+    └── negotiationEngine.ts
+instant.schema.ts
+instant.perms.ts
+```
+
+## Getting Started Steps
+1. Create app:
+   `npx create-next-app@latest . --tailwind --eslint --app --src-dir --import-alias "@/*" --typescript`
+2. Install dependencies:
+   `npm install @instantdb/react`
+3. Create schema, perms, and db initialization files.
+4. Implement auth flow and role bootstrap.
+5. Build pages and shared components.
+6. Add deterministic negotiation engine logic.
+7. Ensure app runs with `npm run dev`.
+
+Please create all necessary files with complete, working code, and include clear comments for major sections since I am a beginner.</code></pre>
+    </section>
+
+    <section>
+      <h2>3) Run Your App Locally</h2>
+      <pre><code class="language-bash">npm install
+npm run dev</code></pre>
+      <p>
+        Open <a href="http://localhost:3000" target="_blank" rel="noreferrer">http://localhost:3000</a> in your browser.
+        Localhost means "run on this computer only." It is your private test environment before deployment.
+      </p>
+    </section>
+
+    <section>
+      <h2>4) If You See Errors</h2>
+      <ol>
+        <li>Copy the exact error text from terminal or browser console.</li>
+        <li>Paste it into Cursor Composer.</li>
+        <li>Ask: <em>I got this error. Please fix it and explain why it happened in beginner terms.</em></li>
+      </ol>
+    </section>
+
+    <section class="next-step">
+      <h2>Next Step</h2>
+      <p>Once your app works locally, move to deployment and publish it online.</p>
+      <a class="btn-primary" href="deploy.html">Continue to Deploy</a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Progress milestone: you now have the blueprint for the full app build.</p>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-jsx.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-tsx.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+  <script src="scripts.js"></script>
+</body>
+</html>

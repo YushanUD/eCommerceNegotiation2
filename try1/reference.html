@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reference - E-Commerce Negotiation Platform Tutorial</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: "#0d9488"
+          }
+        }
+      }
+    };
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet" />
+  <link href="styles.css" rel="stylesheet" />
+</head>
+<body data-page="reference">
+  <header class="site-header">
+    <nav class="site-nav">
+      <a class="brand" href="index.html">Negotiation App Tutorial</a>
+      <div class="nav-links">
+        <a data-nav="index" href="index.html">Introduction</a>
+        <a data-nav="setup" href="setup.html">Setup</a>
+        <a data-nav="build" href="build.html">Build</a>
+        <a data-nav="deploy" href="deploy.html">Deploy</a>
+        <a data-nav="reference" href="reference.html">Reference</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="hero">
+      <p class="eyebrow">Page 5 of 5</p>
+      <h1>Next Steps and Troubleshooting</h1>
+      <p>
+        Keep this page as your operating manual. Building software is iterative, and this gives you a stable process
+        to improve your app over time.
+      </p>
+    </section>
+
+    <section>
+      <h2>How to Make Changes Safely</h2>
+      <ol>
+        <li>Describe your desired change to Cursor.</li>
+        <li>Run locally with <code>npm run dev</code>.</li>
+        <li>Test the specific flow you changed.</li>
+        <li>Push to GitHub and confirm Vercel deploy succeeds.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Feature Ideas for Your Negotiation Platform</h2>
+      <ul>
+        <li>Add editable negotiation strategy presets (conservative, balanced, aggressive).</li>
+        <li>Add a comparison view showing student preference score vs agent score per offer.</li>
+        <li>Add negotiation transcripts so students can review past offer rounds.</li>
+        <li>Add product category filtering (laptop, phone, accessories) for easier selection.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Troubleshooting FAQ</h2>
+
+      <article class="accordion-item">
+        <button class="accordion-header" type="button">
+          <span>I see a blank page</span>
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-inner">
+            <ul>
+              <li>Open browser Developer Tools: right click -&gt; Inspect -&gt; Console.</li>
+              <li>Copy the red error message.</li>
+              <li>Ask Cursor to fix it and explain root cause simply.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion-item">
+        <button class="accordion-header" type="button">
+          <span><code>npm run dev</code> fails</span>
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-inner">
+            <ul>
+              <li>Run <code>npm install</code> first to ensure dependencies are present.</li>
+              <li>Check the first error line, not only the final line.</li>
+              <li>Paste full error into Cursor Composer for guided fixes.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion-item">
+        <button class="accordion-header" type="button">
+          <span>Works locally but fails on Vercel</span>
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-inner">
+            <ul>
+              <li>Check Vercel build logs for exact failure file and command.</li>
+              <li>Verify <code>NEXT_PUBLIC_INSTANT_APP_ID</code> is set in Vercel project settings.</li>
+              <li>Confirm all files are pushed to GitHub main branch.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion-item">
+        <button class="accordion-header" type="button">
+          <span>Magic code login is not working</span>
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-inner">
+            <ul>
+              <li>Check App ID accuracy in local and Vercel environments.</li>
+              <li>Use a real email address and check spam folder.</li>
+              <li>Confirm auth setup in InstantDB dashboard.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion-item">
+        <button class="accordion-header" type="button">
+          <span>My latest changes are not visible live</span>
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-inner">
+            <ul>
+              <li>Verify push to GitHub actually completed.</li>
+              <li>Wait 1-2 minutes for Vercel to rebuild.</li>
+              <li>Hard refresh your browser (Cmd+Shift+R or Ctrl+Shift+R).</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion-item">
+        <button class="accordion-header" type="button">
+          <span>I want to restart cleanly</span>
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-inner">
+            <ul>
+              <li>Create a fresh folder and rerun the build prompt.</li>
+              <li>Use your same InstantDB app or create a new one for a clean dataset.</li>
+              <li>This is normal. Restarting is often faster than patching many broken pieces.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section>
+      <h2>Learning Resources</h2>
+      <ul>
+        <li><a href="https://nextjs.org/docs" target="_blank" rel="noreferrer">Next.js Docs</a></li>
+        <li><a href="https://www.instantdb.com/docs" target="_blank" rel="noreferrer">InstantDB Docs</a></li>
+        <li><a href="https://tailwindcss.com/docs" target="_blank" rel="noreferrer">Tailwind CSS Docs</a></li>
+        <li><a href="https://react.dev" target="_blank" rel="noreferrer">React Docs</a></li>
+      </ul>
+    </section>
+
+    <section class="next-step">
+      <h2>You Are Ready</h2>
+      <p>
+        You now have a full process: setup, build, test, deploy, and improve. This is the core cycle of modern web
+        product development.
+      </p>
+      <a class="btn-primary" href="index.html">Back to Introduction</a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Keep iterating. Each improvement makes your product and your skills stronger.</p>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-jsx.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-tsx.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+  <script src="scripts.js"></script>
+</body>
+</html>

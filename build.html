@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Build - E-Commerce Negotiation Platform Tutorial</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: "#2563eb"
+          }
+        }
+      }
+    };
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <link href="styles.css" rel="stylesheet" />
+</head>
+<body>
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="brand">E-Commerce Negotiation Platform Tutorial</a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Introduction</a>
+        <a href="setup.html" class="nav-link">Setup</a>
+        <a href="build.html" class="nav-link active">Build</a>
+        <a href="deploy.html" class="nav-link">Deploy</a>
+        <a href="reference.html" class="nav-link">Reference</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="page-wrap fade-target">
+    <section class="hero">
+      <p class="eyebrow">Page 3 of 5</p>
+      <h1>Build your app with Cursor</h1>
+      <p>
+        You will now ask Cursor to generate most of your project from one high-quality prompt.
+        Your job is to give clear instructions; Cursor does the heavy coding work.
+      </p>
+    </section>
+
+    <section id="folder">
+      <h2>Create your project folder</h2>
+      <ol>
+        <li>Create a folder such as <code>ecommerce-negotiation-app</code> (use dashes, no spaces)</li>
+        <li>Open that folder in Cursor (File -&gt; Open Folder)</li>
+        <li>Open Composer with Cmd+I (Mac) or Ctrl+I (Windows)</li>
+      </ol>
+    </section>
+
+    <section id="build-prompt">
+      <h2>Your personalized build prompt</h2>
+      <p>
+        Copy this entire prompt into Cursor Composer. Replace every <code>YOUR_APP_ID_HERE</code>
+        with your real InstantDB App ID before running.
+      </p>
+
+      <pre><code class="language-markdown">Build me a Next.js web application. Here are the complete specifications:
+
+## Tech Stack (DO NOT DEVIATE)
+- Next.js 14+ with App Router (not Pages Router)
+- TypeScript
+- Tailwind CSS for styling
+- InstantDB for database and authentication (use @instantdb/react)
+
+## InstantDB Configuration
+My InstantDB App ID is: YOUR_APP_ID_HERE
+
+Initialize InstantDB in a file at `src/lib/db.ts` like this:
+```typescript
+import { init } from '@instantdb/react';
+import schema from '../../instant.schema';
+
+const APP_ID = 'YOUR_APP_ID_HERE';
+
+export const db = init({
+  appId: APP_ID,
+  schema
+});
+```
+
+## App Description
+Build an E-Commerce Negotiation Platform where an Admin configures a negotiation template (product topic, features, options, weights, utility settings, and concession style) and users run negotiations against a computer agent. Users should be able to create offers, exchange offers with the agent, view utility values, and finish by accepting an offer or ending the session. The app must support account-based usage so each user only sees their own profile, sessions, and offers.
+
+## Data Model
+Create an InstantDB schema in `instant.schema.ts` with these entities:
+- `negotiationTemplates`: name (string), topic (string), createdAt (date), createdByUserId (string)
+- `templateFeatures`: templateId (string), name (string), type (string: "price" | "option"), weightPercent (number), createdAt (date)
+- `featureOptions`: featureId (string), label (string), utilityValue (number), createdAt (date)
+- `agentProfiles`: templateId (string), name (string), avatarPreset (string), concessionType (string: "linear" | "convex" | "concave"), utilityFormulaText (string), createdAt (date)
+- `userProfiles`: fullName (string), ageRange (string), gender (string), createdAt (date)
+- `userFeaturePrefs`: userId (string), featureId (string), weightPercent (number), createdAt (date)
+- `userOptionUtilities`: userId (string), featureOptionId (string), utilityValue (number), createdAt (date)
+- `negotiationSessions`: templateId (string), userId (string), agentProfileId (string), status (string: "active" | "accepted" | "ended"), finalOutcome (string), createdAt (date), endedAt (date optional)
+- `offers`: sessionId (string), senderType (string: "user" | "agent"), priceValue (number), computedUtility (number), payloadJson (string), createdAt (date)
+
+And these relationships:
+- One negotiationTemplate has many templateFeatures and many agentProfiles
+- One templateFeature has many featureOptions
+- One negotiationSession belongs to one user, one template, and one agentProfile
+- One negotiationSession has many offers
+- User-owned preference records belong to one user and connect to features/options
+
+## Authentication
+Implement user authentication using InstantDB's Magic Code flow:
+1. User enters their email
+2. InstantDB sends a 6-digit code to that email
+3. User enters the code to log in
+4. Use `db.useAuth()` to check login status
+5. Protect routes that require authentication
+
+## Pages to Create
+- `/` - Home page: project intro, role entry points, and login status
+- `/login` - Login page with Magic Code flow
+- `/admin/templates` - Admin list of negotiation templates
+- `/admin/templates/new` - Create template + features + options
+- `/admin/agents/new` - Create one agent profile for a template (name, avatar preset, concession type, formula text)
+- `/user/profile` - User demographic profile form
+- `/user/preferences` - User weights and option utility setup
+- `/negotiate/[sessionId]` - Negotiation table showing offer history and actions: Accept, Compose Counter Offer, End Negotiation
+- `/negotiate/[sessionId]/compose` - Compose offer form (choose one option per feature + price slider)
+- `/sessions` - User session history and outcomes
+
+## Core Features
+1. Admin can create negotiation templates for products (for example laptop negotiation).
+2. Admin can define features, feature options, and preference weight setup.
+3. Admin can create a single agent profile per template with concession style and utility formula text.
+4. Users can create their own demographic profile and preference setup.
+5. Agent sends first offer when a negotiation session starts.
+6. Users can compose and submit counter offers.
+7. Negotiation timeline displays all offers with sender, selected options, price, and utility score.
+8. Users can accept an offer or end negotiation, and session outcome is stored.
+9. Each signed-in user only accesses their own profile, preferences, sessions, and offers.
+
+## In-Scope and Out-of-Scope
+In scope:
+- Two-role workflow (Admin setup + User negotiation)
+- Text and form based configuration
+- Persisting all negotiation data in InstantDB
+
+Out of scope (do not implement):
+- File/image uploads
+- Multiple agent creation per template
+- External APIs, payments, maps, email workflows beyond Magic Code login
+
+## UI Requirements
+- Clean, modern design using Tailwind CSS
+- Mobile-responsive (works on phones and desktops)
+- Clear navigation between pages
+- Loading states while data is being fetched
+- Error messages when something goes wrong
+
+## File Structure
+Use this structure:
+```
+src/
+├── app/
+│   ├── layout.tsx
+│   ├── page.tsx
+│   ├── login/
+│   │   └── page.tsx
+│   └── [other routes as needed]
+├── components/
+│   └── [reusable components]
+└── lib/
+    └── db.ts
+instant.schema.ts
+instant.perms.ts
+```
+
+## Getting Started Steps
+1. Create the Next.js app: `npx create-next-app@latest . --tailwind --eslint --app --src-dir --import-alias "@/*" --typescript`
+2. Install InstantDB: `npm install @instantdb/react`
+3. Create the files listed above
+4. Set up the schema and permissions for InstantDB
+5. Add `.env.local` with `NEXT_PUBLIC_INSTANT_APP_ID=YOUR_APP_ID_HERE`
+
+Please create all necessary files with complete, working code.</code></pre>
+    </section>
+
+    <section id="run">
+      <h2>Run locally</h2>
+      <ol>
+        <li>Open terminal in Cursor</li>
+        <li>Run:</li>
+      </ol>
+      <pre><code class="language-bash">npm install
+npm run dev</code></pre>
+      <p>
+        Then open <code>http://localhost:3000</code>. Localhost means the app is running on your own computer only.
+      </p>
+    </section>
+
+    <section id="fixing">
+      <h2>If you hit errors</h2>
+      <ol>
+        <li>Copy the exact error from browser console or terminal</li>
+        <li>Paste into Composer and ask: <em>"Please fix this error in my project."</em></li>
+        <li>Accept suggested changes, then rerun <code>npm run dev</code></li>
+      </ol>
+    </section>
+
+    <section class="next-step">
+      <h2>Next step</h2>
+      <p>Go to <a href="deploy.html">Deploy</a> to put your app online with Vercel.</p>
+    </section>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-jsx.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-tsx.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+  <script src="scripts.js"></script>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Introduction - E-Commerce Negotiation Platform Tutorial</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: "#0d9488"
+          }
+        }
+      }
+    };
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet" />
+  <link href="styles.css" rel="stylesheet" />
+</head>
+<body data-page="index">
+  <header class="site-header">
+    <nav class="site-nav">
+      <a class="brand" href="index.html">Negotiation App Tutorial</a>
+      <div class="nav-links">
+        <a data-nav="index" href="index.html">Introduction</a>
+        <a data-nav="setup" href="setup.html">Setup</a>
+        <a data-nav="build" href="build.html">Build</a>
+        <a data-nav="deploy" href="deploy.html">Deploy</a>
+        <a data-nav="reference" href="reference.html">Reference</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="hero">
+      <p class="eyebrow">Page 1 of 5</p>
+      <h1>Welcome to Your App-Building Journey</h1>
+      <p>
+        You are about to build a real web app: an e-commerce negotiation platform where students negotiate with a
+        computer agent, and you (as admin) configure products and agent preferences. By the end, your app can be live
+        on the internet and used by real people.
+      </p>
+    </section>
+
+    <section>
+      <h2>What You Are Building</h2>
+      <p>
+        Your app helps online shoppers negotiate product offers instead of accepting one fixed price. Students create
+        their own preference profile (what matters most to them), then exchange offers with a rules-based computer
+        agent. You can configure product options and the agent's preference weights as the admin.
+      </p>
+      <div class="callout">
+        <h3>Simple Finished-App Picture</h3>
+        <ul>
+          <li>Login with email and magic code</li>
+          <li>Student selects product preferences and option weights</li>
+          <li>Negotiation screen shows offer history and counter-offers</li>
+          <li>Admin screen configures product features and agent preference logic</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="dynamic-apps">
+      <h2>Understanding Dynamic Web Apps</h2>
+      <h3>Website vs Web App</h3>
+      <p>
+        A <strong>website</strong> is usually like a digital brochure: you read content. A <strong>web app</strong>
+        is interactive: people sign in, save data, and perform actions. Your project is a web app because each user has
+        an account and their own saved preferences and negotiations.
+      </p>
+
+      <h3>The Client-Server Model (Restaurant Analogy)</h3>
+      <blockquote>
+        Imagine a restaurant. The dining room is where customers interact. The kitchen is where food is prepared and
+        stored. Customers do not enter the kitchen directly.
+      </blockquote>
+      <ul>
+        <li><strong>Frontend (client)</strong>: The dining room. Buttons, forms, and screens users see.</li>
+        <li><strong>Backend (server)</strong>: The kitchen. Stores data and enforces rules.</li>
+        <li><strong>API</strong>: The waiter carrying requests and responses between both sides.</li>
+      </ul>
+
+      <h3>Why Both Frontend and Backend Matter</h3>
+      <ul>
+        <li><strong>Persistence</strong>: Data survives after browser close.</li>
+        <li><strong>Multiple users</strong>: Everyone can access shared product definitions, but keep private profiles.</li>
+        <li><strong>Security</strong>: Permission checks happen in the backend where users cannot tamper.</li>
+      </ul>
+
+      <h3>What This Means for Your Project</h3>
+      <ul>
+        <li>Frontend with <strong>Next.js + React</strong> for interactive screens.</li>
+        <li>Backend and auth with <strong>InstantDB</strong> using magic code login.</li>
+        <li>No custom backend server needed for v1; InstantDB handles storage and auth.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Your Tool Stack</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Tool</th>
+              <th>What It Does</th>
+              <th>Analogy</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Cursor</td>
+              <td>AI coding editor that helps generate and fix code</td>
+              <td>Your coding co-pilot</td>
+            </tr>
+            <tr>
+              <td>Next.js</td>
+              <td>Builds your app's pages and user interface</td>
+              <td>Blueprint for your storefront</td>
+            </tr>
+            <tr>
+              <td>InstantDB</td>
+              <td>Stores app data and handles user login</td>
+              <td>Secure back office and record system</td>
+            </tr>
+            <tr>
+              <td>Vercel</td>
+              <td>Hosts your app online</td>
+              <td>The building open to the public</td>
+            </tr>
+            <tr>
+              <td>GitHub</td>
+              <td>Stores your code history</td>
+              <td>Versioned filing cabinet</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="next-step">
+      <h2>Next Step</h2>
+      <p>Go to the setup page to create accounts, install tools, and get your InstantDB App ID.</p>
+      <a class="btn-primary" href="setup.html">Continue to Setup</a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Personalized for your E-Commerce Negotiation Platform project.</p>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-jsx.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-tsx.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+  <script src="scripts.js"></script>
+</body>
+</html>
