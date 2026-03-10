@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Setup - E-Commerce Negotiation Platform Tutorial</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { primary: "#2563eb" }
+        }
+      }
+    };
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <link href="styles.css" rel="stylesheet" />
+</head>
+<body>
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="brand">E-Commerce Negotiation Platform Tutorial</a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Introduction</a>
+        <a href="setup.html" class="nav-link active">Setup</a>
+        <a href="build.html" class="nav-link">Build</a>
+        <a href="deploy.html" class="nav-link">Deploy</a>
+        <a href="reference.html" class="nav-link">Reference</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="page-wrap fade-target">
+    <section class="hero">
+      <p class="eyebrow">Page 2 of 5</p>
+      <h1>Setup your accounts and tools</h1>
+      <p>Think of this page as preparing your kitchen before cooking. Once setup is done, building is much smoother.</p>
+    </section>
+
+    <section id="accounts">
+      <h2>Create your accounts</h2>
+      <h3>GitHub</h3>
+      <p>Why: stores your code and connects to Vercel deployment.</p>
+      <ol>
+        <li>Go to <a href="https://github.com" target="_blank" rel="noreferrer">github.com</a></li>
+        <li>Sign up and verify email</li>
+        <li>Pick a professional username</li>
+      </ol>
+
+      <h3>Vercel</h3>
+      <p>Why: hosts your app online for free.</p>
+      <ol>
+        <li>Go to <a href="https://vercel.com" target="_blank" rel="noreferrer">vercel.com</a></li>
+        <li>Sign up with GitHub</li>
+        <li>Use Hobby plan</li>
+      </ol>
+
+      <h3>InstantDB</h3>
+      <p>Why: backend data + Magic Code authentication.</p>
+      <ol>
+        <li>Go to <a href="https://www.instantdb.com" target="_blank" rel="noreferrer">instantdb.com</a></li>
+        <li>Create account and verify email</li>
+      </ol>
+    </section>
+
+    <section id="app-id">
+      <h2>Create your InstantDB app and App ID</h2>
+      <ol>
+        <li>Open <a href="https://instantdb.com/dash" target="_blank" rel="noreferrer">instantdb.com/dash</a></li>
+        <li>Click <strong>Create App</strong></li>
+        <li>Copy your App ID and save it</li>
+      </ol>
+      <div class="callout">
+        <p><strong>Mental model:</strong> App ID is your database address label. It is public and safe to expose.</p>
+      </div>
+      <pre><code class="language-bash"># Example format only
+566ffee5-e773-4b68-a132-29678f8f6eea</code></pre>
+    </section>
+
+    <section id="node">
+      <h2>Install Node.js</h2>
+      <p>Node.js allows your computer to run JavaScript tooling like npm and local dev servers.</p>
+      <ol>
+        <li>Go to <a href="https://nodejs.org" target="_blank" rel="noreferrer">nodejs.org</a></li>
+        <li>Install LTS version</li>
+        <li>Verify:</li>
+      </ol>
+      <pre><code class="language-bash">node --version
+npm --version</code></pre>
+    </section>
+
+    <section id="cursor">
+      <h2>Install and configure Cursor docs</h2>
+      <ol>
+        <li>Install Cursor from <a href="https://cursor.com" target="_blank" rel="noreferrer">cursor.com</a></li>
+        <li>Open Settings -> Features -> Docs -> Add Doc</li>
+        <li>Add <code>https://www.instantdb.com/docs</code></li>
+      </ol>
+      <p>Why: giving Cursor current docs improves generated code accuracy.</p>
+    </section>
+
+    <section class="next-step">
+      <h2>Next step</h2>
+      <p>Continue to <a href="build.html">Build</a> to generate your app with the customized prompt.</p>
+    </section>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-jsx.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-tsx.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+  <script src="scripts.js"></script>
+</body>
+</html>
